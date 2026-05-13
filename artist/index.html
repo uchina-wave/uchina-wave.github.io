@@ -1,66 +1,509 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artist Database — Uchina Wave</title>
+<meta name="description" content="Every artist covered in Uchina Wave — the English-language newsletter for Japanese hip-hop and Okinawa life.">
+<meta property="og:title" content="Artist Database — Uchina Wave">
+<meta property="og:description" content="Every artist covered in Uchina Wave — Japanese hip-hop and Okinawa life, translated for the rest of the world.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Shippori+Mincho:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-.db-wrap{padding:1.5rem 0;font-family:var(--font-mono)}
-.db-header{margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid var(--color-text-primary);display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem}
-.db-logo{font-size:26px;font-weight:500;color:#0a3d5c;letter-spacing:0.05em;line-height:1}
-.db-logo span{color:#e85d3a}
-.db-sub{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-text-secondary);margin-top:4px}
-.stats-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
-.stat-pill{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px 14px}
-.stat-n{font-size:20px;font-weight:500;color:#0a3d5c;line-height:1}
-.stat-l{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text-secondary);margin-top:2px}
-.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem}
-.controls input,.controls select{font-size:12px;padding:6px 10px;font-family:var(--font-mono)}
-.controls input{flex:1;min-width:160px}
-.sec-label{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--color-text-secondary);margin-bottom:10px;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem}
-.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;cursor:pointer;transition:border-color 0.15s}
-.card:hover{border-color:var(--color-border-secondary)}
-.card.c-oki{border-left:3px solid #0a3d5c}
-.card.c-collab{border-left:3px solid #00b4a0}
-.card.c-prod{border-left:3px solid #e85d3a}
-.card-hdr{padding:12px 14px 8px}
-.card-dex{font-size:10px;color:var(--color-text-secondary);letter-spacing:0.1em;margin-bottom:2px}
-.card-name{font-size:15px;font-weight:500;color:var(--color-text-primary);line-height:1.2}
-.card-real{font-size:11px;color:var(--color-text-secondary);margin-top:1px}
-.tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
-.tag{font-size:9px;letter-spacing:0.08em;text-transform:uppercase;padding:2px 6px;border-radius:99px}
-.t-oki{background:#E6F1FB;color:#0C447C}
-.t-main{background:#f0eefe;color:#3a2a70}
-.t-intl{background:#FAECE7;color:#712B13}
-.t-rap{background:#EAF3DE;color:#27500A}
-.t-prod{background:#FAEEDA;color:#633806}
-.t-both{background:#FBEAF0;color:#72243E}
-.t-cov{background:#00b4a0;color:white}
-.t-up{background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary)}
-.card-body{padding:8px 14px 12px;border-top:0.5px solid var(--color-border-tertiary)}
-.card-bio{font-size:11.5px;font-family:var(--font-sans);color:var(--color-text-secondary);line-height:1.6;margin-bottom:8px}
-.card-conn{font-size:10.5px;color:#00b4a0;line-height:1.5}
-.card-stat{font-size:10px;color:var(--color-text-secondary);margin-top:6px;padding-top:6px;border-top:0.5px solid var(--color-border-tertiary);display:flex;flex-wrap:wrap;gap:6px}
-.card-stat span{background:var(--color-background-secondary);padding:2px 6px;border-radius:4px}
-.card-links{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
-.card-link{font-size:10px;padding:2px 8px;border:0.5px solid var(--color-border-tertiary);border-radius:99px;color:#0a3d5c;text-decoration:none;font-family:var(--font-mono)}
-.card-link:hover{background:#0a3d5c;color:white;border-color:#0a3d5c}
-.card-hi{display:flex;align-items:flex-start;gap:10px}
-.card-txt{flex:1}
-.vinyl{width:36px;height:36px;border-radius:50%;background:#0d1117;border:5px solid #1a2a3a;position:relative;box-shadow:0 0 0 1.5px #00b4a0;flex-shrink:0}
-.vinyl::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:7px;height:7px;background:#f5efe6;border-radius:50%}
-.empty{grid-column:1/-1;text-align:center;padding:2rem;color:var(--color-text-secondary);font-size:13px}
-.hidden{display:none!important}
-.issue-badge{font-size:9px;padding:1px 5px;border-radius:3px;background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary);margin-left:4px}
-</style>
+  :root {
+    --ocean: #0a3d5c;
+    --reef:  #00b4a0;
+    --sand:  #f5efe6;
+    --coral: #e85d3a;
+    --ink:   #1a1a2e;
+    --fog:   #8a8fa8;
+    --rule:  #d8d0c8;
+    --surface: #ffffff;
+    --night: #0d1117;
+  }
 
-<h2 class="sr-only">Uchina Wave artist database — cards for all artists featured in the newsletter</h2>
-<div class="db-wrap">
-  <div class="db-header">
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--sand);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--ink);
+    border-bottom: 3px solid var(--coral);
+    padding: 32px 24px 28px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    letter-spacing: 0.04em;
+    color: var(--sand);
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--coral); }
+
+  .logo-sub {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--reef);
+    margin-top: 4px;
+  }
+
+  .header-nav {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .header-nav a {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(245,239,230,0.6);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .header-nav a:hover { color: var(--reef); }
+  .header-nav a.active { color: var(--reef); }
+
+  /* ── PAGE HERO ── */
+  .hero {
+    background: var(--ocean);
+    padding: 52px 24px 44px;
+    border-bottom: 1px solid rgba(0,180,160,0.3);
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: end;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 6vw, 64px);
+    letter-spacing: 0.06em;
+    color: var(--sand);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .hero-title span { color: var(--reef); }
+
+  .hero-desc {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 15px;
+    color: rgba(245,239,230,0.7);
+    line-height: 1.8;
+    max-width: 520px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2px;
+  }
+
+  .hero-stat {
+    background: rgba(0,0,0,0.25);
+    padding: 16px 20px;
+    text-align: center;
+    min-width: 80px;
+  }
+
+  .hero-stat-n {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--reef);
+    line-height: 1;
+  }
+
+  .hero-stat-l {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,239,230,0.5);
+    margin-top: 3px;
+  }
+
+  /* ── CONTROLS ── */
+  .controls-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--rule);
+    padding: 16px 24px;
+    position: sticky;
+    top: 107px;
+    z-index: 90;
+  }
+
+  .controls-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .search-wrap {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+
+  .search-wrap svg {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  #search {
+    width: 100%;
+    padding: 8px 10px 8px 34px;
+    border: 1px solid var(--rule);
+    background: var(--sand);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--ink);
+    outline: none;
+    border-radius: 2px;
+  }
+
+  #search:focus { border-color: var(--reef); }
+
+  select {
+    padding: 8px 12px;
+    border: 1px solid var(--rule);
+    background: var(--sand);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--ink);
+    outline: none;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+
+  select:focus { border-color: var(--reef); }
+
+  .result-count {
+    font-size: 11px;
+    color: var(--fog);
+    letter-spacing: 0.06em;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 48px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-oki   { background: var(--ocean); }
+  .dot-main  { background: var(--fog); }
+  .dot-intl  { background: var(--coral); }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    color: var(--ink);
+  }
+
+  .section-count {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--fog);
+    margin-left: auto;
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: default;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(10,61,92,0.12);
+  }
+
+  .card.oki  { border-top: 3px solid var(--ocean); }
+  .card.main { border-top: 3px solid var(--fog); }
+  .card.intl { border-top: 3px solid var(--coral); }
+
+  .card-top {
+    padding: 14px 16px 10px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .vinyl {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--night);
+    border: 5px solid #1a2a3a;
+    box-shadow: 0 0 0 1.5px var(--reef);
+    position: relative;
+    flex-shrink: 0;
+    animation: spin 10s linear infinite;
+    animation-play-state: paused;
+  }
+
+  .card:hover .vinyl {
+    animation-play-state: running;
+  }
+
+  .vinyl::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 7px; height: 7px;
+    background: var(--sand);
+    border-radius: 50%;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  .card-id {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--fog);
+    margin-bottom: 2px;
+  }
+
+  .card-name {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .card-real {
+    font-size: 11px;
+    color: var(--fog);
+    margin-top: 1px;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 0 16px 12px;
+  }
+
+  .tag {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 99px;
+  }
+
+  .tag-oki  { background: #E6F1FB; color: #0C447C; }
+  .tag-main { background: #f0eefe; color: #3a2a70; }
+  .tag-intl { background: #FAECE7; color: #712B13; }
+  .tag-rap  { background: #EAF3DE; color: #27500A; }
+  .tag-prod { background: #FAEEDA; color: #633806; }
+  .tag-both { background: #FBEAF0; color: #72243E; }
+  .tag-cov  { background: var(--reef); color: white; }
+  .tag-up   { background: #f0f0f0; color: var(--fog); border: 1px solid var(--rule); }
+
+  .issue-pip {
+    font-size: 9px;
+    padding: 1px 5px;
+    background: var(--ocean);
+    color: rgba(245,239,230,0.85);
+    border-radius: 2px;
+  }
+
+  .card-body {
+    padding: 10px 16px 14px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .card-bio {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 12.5px;
+    color: #3a3a55;
+    line-height: 1.75;
+    margin-bottom: 8px;
+  }
+
+  .card-conn {
+    font-size: 11px;
+    color: var(--reef);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  .card-notable {
+    font-size: 10px;
+    color: var(--fog);
+    padding-top: 8px;
+    border-top: 1px solid var(--rule);
+    line-height: 1.6;
+  }
+
+  .card-notable strong {
+    color: var(--fog);
+    font-weight: 500;
+  }
+
+  /* ── EMPTY STATE ── */
+  .empty {
+    grid-column: 1 / -1;
+    padding: 40px;
+    text-align: center;
+    color: var(--fog);
+    font-family: 'Shippori Mincho', serif;
+    font-size: 15px;
+  }
+
+  /* ── HIDDEN ── */
+  .hidden { display: none !important; }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    background: var(--ink);
+    border-top: 2px solid var(--coral);
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    color: var(--sand);
+    margin-bottom: 6px;
+  }
+
+  .footer-logo span { color: var(--coral); }
+
+  .footer-text {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: rgba(245,239,230,0.45);
+    line-height: 1.9;
+  }
+
+  .footer-text a { color: var(--reef); text-decoration: none; }
+  .footer-text a:hover { text-decoration: underline; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-stats { display: none; }
+    .controls-bar { top: 90px; }
+    .site-header { padding: 20px 16px 16px; }
+    .logo { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
     <div>
-      <div class="db-logo">UCHINA<span>WAVE</span></div>
-      <div class="db-sub">Artist Database · v2 · 22 entries</div>
+      <a href="https://uchinawave.beehiiv.com" class="logo">UCHINA<span>WAVE</span></a>
+      <div class="logo-sub">Japanese hip-hop + Okinawa life</div>
     </div>
+    <nav class="header-nav">
+      <a href="https://uchinawave.beehiiv.com">Issues</a>
+      <a href="#" class="active">Artists</a>
+      <a href="https://uchinawave.beehiiv.com/subscribe">Subscribe</a>
+    </nav>
   </div>
-  <div class="stats-row" id="stats-row"></div>
-  <div class="controls">
-    <input type="text" id="search" placeholder="Search artists, bios, connections..." oninput="filter()">
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-title">ARTIST<br><span>DATABASE</span></div>
+      <div class="hero-desc">Every artist, producer, and collaborator covered in Uchina Wave — with context, connections, and issue references.</div>
+    </div>
+    <div class="hero-stats" id="hero-stats"></div>
+  </div>
+</section>
+
+<!-- CONTROLS -->
+<div class="controls-bar">
+  <div class="controls-inner">
+    <div class="search-wrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search" placeholder="Search artists, bios, connections..." oninput="filter()">
+    </div>
     <select id="f-origin" onchange="filter()">
       <option value="">All origins</option>
       <option value="okinawa">Okinawa</option>
@@ -74,111 +517,316 @@
       <option value="both">Both</option>
     </select>
     <select id="f-status" onchange="filter()">
-      <option value="">All statuses</option>
-      <option value="true">Covered</option>
-      <option value="false">Upcoming</option>
+      <option value="">All</option>
+      <option value="covered">Covered</option>
+      <option value="upcoming">Upcoming</option>
     </select>
+    <span class="result-count" id="result-count"></span>
   </div>
-  <div class="sec-label" id="sec-oki">Okinawa artists</div>
-  <div class="grid" id="grid-oki"></div>
-  <div class="sec-label" id="sec-main">Mainland Japan</div>
-  <div class="grid" id="grid-main"></div>
-  <div class="sec-label" id="sec-intl">International collabs & producers</div>
-  <div class="grid" id="grid-intl"></div>
 </div>
 
+<!-- MAIN -->
+<main class="main">
+  <div id="sec-oki" class="section">
+    <div class="section-header">
+      <div class="section-dot dot-oki"></div>
+      <div class="section-title">OKINAWA</div>
+      <div class="section-count" id="cnt-oki"></div>
+    </div>
+    <div class="grid" id="grid-oki"></div>
+  </div>
+
+  <div id="sec-main" class="section">
+    <div class="section-header">
+      <div class="section-dot dot-main"></div>
+      <div class="section-title">MAINLAND JAPAN</div>
+      <div class="section-count" id="cnt-main"></div>
+    </div>
+    <div class="grid" id="grid-main"></div>
+  </div>
+
+  <div id="sec-intl" class="section">
+    <div class="section-header">
+      <div class="section-dot dot-intl"></div>
+      <div class="section-title">INTERNATIONAL COLLABS & PRODUCERS</div>
+      <div class="section-count" id="cnt-intl"></div>
+    </div>
+    <div class="grid" id="grid-intl"></div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-logo">UCHINA<span>WAVE</span></div>
+  <div class="footer-text">
+    Written from Okinawa, Japan. Every Wednesday.<br>
+    Japanese hip-hop and island life — translated for the rest of the world.<br><br>
+    <a href="https://uchinawave.beehiiv.com/subscribe">Subscribe to the newsletter →</a>
+  </div>
+</footer>
+
 <script>
-const A=[
-  {id:1,dex:'#001',name:'Awich',real:'幸地アウィチ',origin:'okinawa',type:'rapper',covered:true,bio:'Naha-born. Idolised Tupac at 13. Lived in Atlanta, returned after personal tragedy. First Japanese rapper at Coachella (2024). Runs Cypher City. Full album with RZA in 2025.',conn:'Issues #001, #002, #003. Deep dive: #002 (Okinawan Wuman), #006.',stat:'5M+ monthly Spotify',work:'Okinawan Wuman, Gila, Butcher Shop',issues:['001','002','003']},
-  {id:2,dex:'#002',name:'OZworld',real:'a.k.a. OZROSEHEAD',origin:'okinawa',type:'rapper',covered:true,bio:'Okinawa-born, raised near US bases. OZROSEHEAD legend. Solo Budokan show "369" named after Ryukyuan concept of a world of harmony.',conn:'Issues #001, #003. Budokan: #005.',stat:'29M+ views on NINOKUNI',work:'IROCHIGAI, NINOKUNI, RASEN IN OKINAWA',issues:['001','003']},
-  {id:3,dex:'#003',name:'Tsubaki',real:'唾奇',origin:'okinawa',type:'rapper',covered:true,bio:'Born 1991, Okinawa. Introspective, literary bars, deliberate pacing. Went silent, came back in 2025. Sold out Budokan "Camellia" Dec 16 2025. Debut solo album followed.',conn:'Issues #001, #003. IROCHIGAI, RASEN IN OKINAWA, Camellia Budokan.',stat:'Budokan sell-out 2025',work:'IROCHIGAI, Camellia, RASEN IN OKINAWA',issues:['001','003']},
-  {id:4,dex:'#004',name:'CHICO CARLITO',real:'',origin:'okinawa',type:'rapper',covered:true,bio:'Born 1993, Naha. Mainland-based. MC battle veteran, ULTIMATE MC BATTLE winner 2016. Tight bars, stoic delivery. Carries Okinawa identity from the mainland.',conn:'Issue #001 on RASEN IN OKINAWA.',stat:'369K+ monthly Spotify',work:"RASEN IN OKINAWA, Grandma's Wish",issues:['001']},
-  {id:5,dex:'#005',name:'LANA',real:'',origin:'okinawa',type:'rapper',covered:false,bio:'Rising Okinawan female MC. Named by Awich as one to watch. Day 1 headliner POP YOURS 2026 — the biggest stage in Japanese hip-hop. Part of the next Okinawan wave.',conn:'Issue #003 (POP YOURS lineup). Deep dive: #006.',stat:'POP YOURS 2026 headliner',work:'Konna Hi wa (w/ Elle Teresa)',issues:['003']},
-  {id:6,dex:'#006',name:'Ryosuke "Dr.R" Sakai',real:'Ryosuke Sakai',origin:'mainland',type:'producer',covered:true,bio:'Tokyo-based producer. Founded MNNF. 250+ songs, 50+ artists, 4M+ cumulative sales. First Asian producer signed to Interscope Records (2018).',conn:'Issue #001 — produced IROCHIGAI.',stat:'4M+ cumulative sales',work:'IROCHIGAI',issues:['001']},
-  {id:7,dex:'#007',name:'Diego Ave',real:'Diego Avendano',origin:'intl',type:'producer',covered:true,bio:'Miami-born. 3x Grammy winner. 2B+ streams. Credits: Post Malone, 21 Savage, Future. Built RASEN IN OKINAWA from Okinawan music Awich played for him.',conn:'Issue #001 — produced RASEN IN OKINAWA.',stat:'2B+ across catalogue',work:'RASEN IN OKINAWA',issues:['001']},
-  {id:8,dex:'#008',name:'RZA',real:'Robert Fitzgerald Diggs',origin:'intl',type:'both',covered:true,bio:'Wu-Tang Clan founder. Travelled to Okinawa to work with Awich. Exec produced all 13 tracks of Okinawan Wuman (2025). First time a figure of this stature built a full project from the island outward.',conn:'Issue #002 — exec producer of Okinawan Wuman.',stat:'Wu-Tang Clan legacy',work:'Okinawan Wuman (exec prod.)',issues:['002']},
-  {id:9,dex:'#009',name:'Joey Bada$$',real:'Jo-Vaughn Virginie Scott',origin:'intl',type:'rapper',covered:true,bio:'Brooklyn MC, Pro Era. Features on Okinawan Wuman (2025). Boom-bap precision, jazz-influenced taste — natural fit for the album\'s aesthetic.',conn:'Issue #002 — feat. on Fear Us.',stat:'4M+ monthly Spotify',work:'Fear Us (w/ Awich & RZA)',issues:['002']},
-  {id:10,dex:'#010',name:'Lupe Fiasco',real:'Wasalu Muhammad Jaco',origin:'intl',type:'rapper',covered:true,bio:'Chicago lyricist. Features on Wax On Wax Off — the Karate Kid-referencing track where Awich reclaims an Okinawan cultural touchstone most listeners never fully placed.',conn:'Issue #002 — feat. on Wax On Wax Off (Crate Dig).',stat:'Grammy winner',work:'Wax On Wax Off (w/ Awich)',issues:['002']},
-  {id:11,dex:'#011',name:'A$AP Ferg',real:'Darold Durard Brown Jr.',origin:'intl',type:'rapper',covered:true,bio:'Harlem MC, A$AP Mob. Features on Okinawan Wuman. Known for energetic, aggressive delivery that cuts against the album\'s more cinematic moments.',conn:'Issue #002 — feat. on Wax On Wax Off.',stat:'Multi-platinum',work:'Wax On Wax Off (w/ Awich)',issues:['002']},
-  {id:12,dex:'#012',name:'Westside Gunn',real:'Alvin Lamar Worthy',origin:'intl',type:'rapper',covered:true,bio:'Buffalo MC, Griselda Records founder. Features on Hold It Down on Okinawan Wuman. His grimy, art-house aesthetic mirrors the album\'s deliberate darkness.',conn:'Issue #002 — feat. on Hold It Down.',stat:'Griselda Records',work:'Hold It Down (w/ Awich)',issues:['002']},
-  {id:13,dex:'#013',name:'Uyama Hiroto',real:'宇山寛人',origin:'mainland',type:'producer',covered:true,bio:'Tokyo producer. Worked extensively with Nujabes — produced key tracks across Metaphorical Music and Modal Soul. His jazz-inflected, wide-space sound is among the most recognisable in J-hip-hop history.',conn:'Issue #008 — produced FRACTAL EP with XBS.',stat:'Nujabes catalogue',work:'FRACTAL (w/ XBS), Nujabes records',issues:['008']},
-  {id:14,dex:'#014',name:'Yuki Chiba',real:'千葉雄喜 (formerly KOHH)',origin:'mainland',type:'rapper',covered:false,bio:'Former KOHH — retired 2019, re-emerged as Yuki Chiba. Mamushi (feat. Yuki Chiba by Megan Thee Stallion) hit Billboard Hot 100. Day 2 headliner POP YOURS 2026. Most compelling reinvention in J-hip-hop.',conn:'Issue #003 (POP YOURS headliner). Deep dive: #005.',stat:'Billboard Hot 100 (Mamushi)',work:'Mamushi (feat. Megan Thee Stallion)',issues:['003']},
-  {id:15,dex:'#015',name:'KEIJU',real:'',origin:'mainland',type:'rapper',covered:true,bio:'Formerly of KANDYTOWN. Veteran MC known for soothing, ethereal style. Day 3 headliner POP YOURS 2026. Dedicated 2024 single "Mama\'s Boy" to his mother. 370K+ Instagram followers.',conn:'Issue #003 — Day 3 POP YOURS headliner.',stat:'370K Instagram followers',work:"Mama's Boy, Backseat (feat. Kvi Baba & tofubeats)",issues:['003']},
-  {id:16,dex:'#016',name:'STUTS',real:'',origin:'mainland',type:'producer',covered:true,bio:'Born 1989, Tokyo. MPC player, trackmaker. Played MPC on the street in Harlem in 2013 — video went viral. Pete Rock and J Dilla influences. 224K Instagram followers. Collaborated with PUNPEE, BIM, Daichi Yamamoto.',conn:'Issue #003 — STUTS Orchestra special live at POP YOURS Day 1. Produced Konna Hi wa (LANA × Elle Teresa).',stat:'224K Instagram followers',work:'Presence series, Summer Situation, Konna Hi wa (POP YOURS 2026)',issues:['003']},
-  {id:17,dex:'#017',name:'PUNPEE',real:'',origin:'mainland',type:'both',covered:true,bio:'One of Japan\'s most respected MC/producers. Long-running creative partnership with STUTS. Signature jazz-funk-hip-hop blend. POP YOURS 2026 Day 3 Special Live.',conn:'Issue #003 — Day 3 Special Live at POP YOURS.',stat:'11M+ views (夜を使いはたして w/ STUTS)',work:'夜を使いはたして (w/ STUTS)',issues:['003']},
-  {id:18,dex:'#018',name:'Daichi Yamamoto',real:'山本大地',origin:'mainland',type:'rapper',covered:true,bio:'Japanese father, Jamaican mother. Began rapping at 18. Studied interactive art at University of the Arts London (2012). Kyoto-based. His multicultural background shapes a distinct lyrical and visual perspective rare in J-hip-hop.',conn:'Issue #003 — Day 2 POP YOURS performer. Featured on "Chigau" (POP YOURS 2026 collab track).',stat:'Jazzy Sport label',work:'Chigau (POP YOURS 2026)',issues:['003']},
-  {id:19,dex:'#019',name:'BIM',real:'',origin:'mainland',type:'rapper',covered:true,bio:'Tokyo MC. Prolific collaborator across the J-hip-hop scene. Regular feature on STUTS records and POP YOURS lineups. Known for smooth, unhurried delivery and consistent output.',conn:'Issue #003 — POP YOURS 2026 performer. Featured on "246" (POP YOURS collab track).',stat:'Multiple STUTS collabs',work:'246 (POP YOURS 2026), マジックアワー (w/ STUTS & RYO-Z)',issues:['003']},
-  {id:20,dex:'#020',name:'kZm',real:'',origin:'mainland',type:'rapper',covered:true,bio:'Tokyo rapper. POP YOURS regular. Known for versatile flow and consistent festival presence. Featured on "246" alongside Mall Boyz and BIM at POP YOURS 2026.',conn:'Issue #003 — featured on "246" (POP YOURS 2026 collab).',stat:'POP YOURS regular',work:'246 (POP YOURS 2026)',issues:['003']},
-  {id:21,dex:'#021',name:'Chaki Zulu',real:'',origin:'mainland',type:'producer',covered:true,bio:'One of Japan\'s most sought-after beatmakers. Produced "246" for POP YOURS 2026. Regular producer for top-tier J-hip-hop MCs. Known for dark, cinematic production.',conn:'Issue #003 — produced "246" at POP YOURS 2026.',stat:'Top J-hip-hop producer',work:'246 (POP YOURS 2026)',issues:['003']},
-  {id:22,dex:'#022',name:'Elle Teresa',real:'',origin:'mainland',type:'rapper',covered:true,bio:'Female MC, one of the sharpest lyricists in the current J-hip-hop generation. Collaborated with LANA on "Konna Hi wa" (POP YOURS 2026) — produced by STUTS & ZOT on the WAVE. The track went viral immediately after the festival.',conn:'Issue #003 — "Konna Hi wa" with LANA at POP YOURS Day 1.',stat:'POP YOURS 2026',work:'Konna Hi wa (w/ LANA)',issues:['003']},
+const ARTISTS = [
+  {
+    id:1, dex:'#001', name:'Awich', real:'幸地アウィチ', origin:'okinawa', type:'rapper', covered:true,
+    bio:'Naha-born. Idolised Tupac at 13. Lived in Atlanta, returned after personal tragedy. First Japanese rapper at Coachella (2024). Runs Cypher City marketing agency. Full album with RZA in 2025.',
+    conn:'Issues #001, #002, #003. Deep dive: Issue #002 (Okinawan Wuman).',
+    stat:'5M+ monthly Spotify listeners',
+    work:'Okinawan Wuman, Gila, Butcher Shop, RASEN IN OKINAWA',
+    issues:['001','002','003']
+  },
+  {
+    id:2, dex:'#002', name:'OZworld', real:'a.k.a. OZROSEHEAD', origin:'okinawa', type:'rapper', covered:true,
+    bio:'Okinawa-born, raised near US bases. OZROSEHEAD legend. First solo Budokan show "369" — named after Miroku no Yo, a Ryukyuan concept of a world of harmony. Deep spirituality runs through all his work.',
+    conn:'Issues #001, #003. Budokan solo: Issue #005.',
+    stat:'29M+ views on NINOKUNI',
+    work:'IROCHIGAI, NINOKUNI, RASEN IN OKINAWA',
+    issues:['001','003']
+  },
+  {
+    id:3, dex:'#003', name:'Tsubaki', real:'唾奇', origin:'okinawa', type:'rapper', covered:true,
+    bio:'Born 1991, Okinawa. Introspective, literary bars and a deliberate flow that sits in negative space. Went silent, returned in 2025. Sold out Budokan "Camellia" Dec 16, 2025. Debut solo album followed.',
+    conn:'Issues #001, #003. IROCHIGAI collab with OZworld. Camellia Budokan.',
+    stat:'Budokan sell-out 2025',
+    work:'IROCHIGAI, Camellia, RASEN IN OKINAWA',
+    issues:['001','003']
+  },
+  {
+    id:4, dex:'#004', name:'CHICO CARLITO', real:'', origin:'okinawa', type:'rapper', covered:true,
+    bio:'Born 1993, Naha. Mainland-based but carries Okinawa in his identity. MC battle veteran — ULTIMATE MC BATTLE winner 2016. Known for tight bars and stoic delivery.',
+    conn:'Issue #001 on RASEN IN OKINAWA.',
+    stat:'369K+ monthly Spotify listeners',
+    work:"RASEN IN OKINAWA, Grandma's Wish",
+    issues:['001']
+  },
+  {
+    id:5, dex:'#005', name:'LANA', real:'', origin:'okinawa', type:'rapper', covered:false,
+    bio:'Rising Okinawan female MC. Named by Awich as one of the artists she\'s watching most closely. Day 1 headliner POP YOURS 2026 — the largest hip-hop festival in Japan. Part of the next Okinawan wave.',
+    conn:'Issue #003 (POP YOURS 2026 lineup). Deep dive: Issue #006.',
+    stat:'POP YOURS 2026 headliner',
+    work:'Konna Hi wa (w/ Elle Teresa, prod. STUTS)',
+    issues:['003']
+  },
+  {
+    id:6, dex:'#006', name:'Ryosuke "Dr.R" Sakai', real:'Ryosuke Sakai', origin:'mainland', type:'producer', covered:true,
+    bio:'Tokyo-based producer, composer, mixing engineer. Founded MNNF. 250+ songs, 50+ artists, 4M+ cumulative sales. First Asian producer signed to Interscope Records (2018). Solo output as Dr.Ryo.',
+    conn:'Issue #001 — produced IROCHIGAI (OZworld × Tsubaki).',
+    stat:'4M+ cumulative sales',
+    work:'IROCHIGAI',
+    issues:['001']
+  },
+  {
+    id:7, dex:'#007', name:'Diego Ave', real:'Diego Avendano', origin:'intl', type:'producer', covered:true,
+    bio:'Miami-born. 3x Grammy winner. 2B+ streams. Credits: Post Malone, 21 Savage, Future, Chris Brown. Built the RASEN IN OKINAWA beat from Okinawan music Awich played for him in the studio.',
+    conn:'Issue #001 — produced RASEN IN OKINAWA.',
+    stat:'2B+ streams across catalogue',
+    work:'RASEN IN OKINAWA',
+    issues:['001']
+  },
+  {
+    id:8, dex:'#008', name:'RZA', real:'Robert Fitzgerald Diggs', origin:'intl', type:'both', covered:true,
+    bio:'Wu-Tang Clan founder. Travelled to Okinawa to work with Awich. Executive produced all 13 tracks of Okinawan Wuman (2025) — the first full album by a Japanese rapper exec-produced by RZA.',
+    conn:'Issue #002 — exec producer of Okinawan Wuman.',
+    stat:'Wu-Tang Clan legacy',
+    work:'Okinawan Wuman (exec prod.)',
+    issues:['002']
+  },
+  {
+    id:9, dex:'#009', name:'Joey Bada$$', real:'Jo-Vaughn Virginie Scott', origin:'intl', type:'rapper', covered:true,
+    bio:'Brooklyn MC, Pro Era founder. Features on Okinawan Wuman (2025). Boom-bap precision and jazz-influenced taste — a natural creative match for the album\'s aesthetic.',
+    conn:'Issue #002 — featured on Fear Us (w/ Awich & RZA).',
+    stat:'4M+ monthly Spotify listeners',
+    work:'Fear Us (w/ Awich & RZA)',
+    issues:['002']
+  },
+  {
+    id:10, dex:'#010', name:'Lupe Fiasco', real:'Wasalu Muhammad Jaco', origin:'intl', type:'rapper', covered:true,
+    bio:'Chicago lyricist. Features on Wax On Wax Off — the track where Awich reclaims a deeply Okinawan cultural reference (Mr. Miyagi, Goju-Ryu karate, the Tensho kata) that the world half-knew without fully placing.',
+    conn:'Issue #002 — featured on Wax On Wax Off (Issue #002 Crate Dig).',
+    stat:'Grammy winner',
+    work:'Wax On Wax Off (w/ Awich)',
+    issues:['002']
+  },
+  {
+    id:11, dex:'#011', name:'A$AP Ferg', real:'Darold Durard Brown Jr.', origin:'intl', type:'rapper', covered:true,
+    bio:'Harlem MC, A$AP Mob. Features on Okinawan Wuman. Known for energetic, aggressive delivery that cuts against the album\'s more cinematic moments.',
+    conn:'Issue #002 — featured on Okinawan Wuman.',
+    stat:'Multi-platinum',
+    work:'Okinawan Wuman (w/ Awich)',
+    issues:['002']
+  },
+  {
+    id:12, dex:'#012', name:'Westside Gunn', real:'Alvin Lamar Worthy', origin:'intl', type:'rapper', covered:true,
+    bio:'Buffalo MC, Griselda Records founder. Features on Hold It Down on Okinawan Wuman. His grimy, art-house aesthetic mirrors the album\'s deliberate darkness.',
+    conn:'Issue #002 — featured on Hold It Down (Okinawan Wuman).',
+    stat:'Griselda Records founder',
+    work:'Hold It Down (w/ Awich)',
+    issues:['002']
+  },
+  {
+    id:13, dex:'#013', name:'Uyama Hiroto', real:'宇山寛人', origin:'mainland', type:'producer', covered:true,
+    bio:'Tokyo producer. Worked extensively with Nujabes — produced key tracks on Metaphorical Music and Modal Soul. His jazz-inflected, wide-space sound is among the most recognisable in J-hip-hop history. Global cult following through the Nujabes connection.',
+    conn:'Issue #008 — produced FRACTAL EP with XBS.',
+    stat:'Nujabes catalogue',
+    work:'FRACTAL (w/ XBS), Nujabes records',
+    issues:['008']
+  },
+  {
+    id:14, dex:'#014', name:'Yuki Chiba', real:'千葉雄喜 (formerly KOHH)', origin:'mainland', type:'rapper', covered:false,
+    bio:'Formerly KOHH — one of the most internationally recognised Japanese rappers before a sudden 2019 retirement. Re-emerged as Yuki Chiba. Mamushi (feat. by Megan Thee Stallion) hit the Billboard Hot 100. Day 2 headliner POP YOURS 2026.',
+    conn:'Issue #003 (POP YOURS headliner). Deep dive: Issue #005.',
+    stat:'Billboard Hot 100',
+    work:'Mamushi (feat. Megan Thee Stallion)',
+    issues:['003']
+  },
+  {
+    id:15, dex:'#015', name:'KEIJU', real:'', origin:'mainland', type:'rapper', covered:true,
+    bio:'Formerly of KANDYTOWN. Veteran MC known for soothing, ethereal style. Day 3 headliner POP YOURS 2026. Dedicated 2024 single "Mama\'s Boy" to his mother. A decade of consistent work — a pillar of the scene.',
+    conn:'Issue #003 — Day 3 headliner at POP YOURS 2026.',
+    stat:'370K+ Instagram followers',
+    work:"Mama's Boy, Backseat (feat. Kvi Baba & tofubeats), N.I.T.O.",
+    issues:['003']
+  },
+  {
+    id:16, dex:'#016', name:'STUTS', real:'', origin:'mainland', type:'producer', covered:true,
+    bio:'Born 1989, Tokyo. MPC player and trackmaker. Played MPC on the street in Harlem in 2013 — video went viral. Pete Rock and J Dilla influences. Computer science background. Prolific collaborator across the J-hip-hop scene.',
+    conn:'Issue #003 — STUTS Orchestra Special Live at POP YOURS Day 1. Produced Konna Hi wa (LANA × Elle Teresa).',
+    stat:'224K+ Instagram followers',
+    work:'Presence series, Summer Situation, Konna Hi wa (POP YOURS 2026)',
+    issues:['003']
+  },
+  {
+    id:17, dex:'#017', name:'PUNPEE', real:'', origin:'mainland', type:'both', covered:true,
+    bio:'One of Japan\'s most respected MC/producers. Long-running creative partnership with STUTS. Signature jazz-funk-hip-hop blend. Known for introspective, layered production. POP YOURS 2026 Day 3 Special Live.',
+    conn:'Issue #003 — Day 3 Special Live at POP YOURS 2026.',
+    stat:'11M+ views (夜を使いはたして w/ STUTS)',
+    work:'夜を使いはたして (w/ STUTS)',
+    issues:['003']
+  },
+  {
+    id:18, dex:'#018', name:'Daichi Yamamoto', real:'山本大地', origin:'mainland', type:'rapper', covered:true,
+    bio:'Japanese father, Jamaican mother. Began rapping at 18. Studied interactive art at University of the Arts London (2012). Kyoto-based. Multicultural background shapes a distinct lyrical perspective rare in J-hip-hop. Jazzy Sport label.',
+    conn:'Issue #003 — POP YOURS Day 2 performer. Featured on "Chigau" (POP YOURS 2026 collab track).',
+    stat:'Jazzy Sport label',
+    work:'Chigau (POP YOURS 2026), Presence IV (w/ STUTS)',
+    issues:['003']
+  },
+  {
+    id:19, dex:'#019', name:'BIM', real:'', origin:'mainland', type:'rapper', covered:true,
+    bio:'Tokyo MC. Prolific collaborator across the J-hip-hop scene. Regular feature on STUTS records and POP YOURS lineups. Known for smooth, unhurried delivery and consistent output over many years.',
+    conn:'Issue #003 — POP YOURS 2026 performer. Featured on "246" (POP YOURS 2026 collab track).',
+    stat:'Multiple STUTS collabs',
+    work:'246 (POP YOURS 2026), マジックアワー (w/ STUTS & RYO-Z)',
+    issues:['003']
+  },
+  {
+    id:20, dex:'#020', name:'kZm', real:'', origin:'mainland', type:'rapper', covered:true,
+    bio:'Tokyo rapper. POP YOURS regular. Known for versatile flow and consistent festival presence. Part of "246" — the viral POP YOURS 2026 collaborative track alongside Mall Boyz and BIM.',
+    conn:'Issue #003 — featured on "246" (POP YOURS 2026 collab track).',
+    stat:'POP YOURS regular',
+    work:'246 (POP YOURS 2026)',
+    issues:['003']
+  },
+  {
+    id:21, dex:'#021', name:'Chaki Zulu', real:'', origin:'mainland', type:'producer', covered:true,
+    bio:'One of Japan\'s most sought-after beatmakers. Known for dark, cinematic production. Regular producer for top-tier J-hip-hop MCs. Produced "246" for POP YOURS 2026 — one of the festival\'s most viral tracks.',
+    conn:'Issue #003 — produced "246" at POP YOURS 2026.',
+    stat:'Top J-hip-hop producer',
+    work:'246 (POP YOURS 2026)',
+    issues:['003']
+  },
+  {
+    id:22, dex:'#022', name:'Elle Teresa', real:'', origin:'mainland', type:'rapper', covered:true,
+    bio:'One of the sharpest female lyricists in the current J-hip-hop generation. Collaborated with LANA on "Konna Hi wa" (POP YOURS 2026) — produced by STUTS & ZOT on the WAVE. The track went viral immediately after the festival.',
+    conn:'Issue #003 — "Konna Hi wa" with LANA at POP YOURS 2026 Day 1.',
+    stat:'POP YOURS 2026',
+    work:'Konna Hi wa (w/ LANA)',
+    issues:['003']
+  },
 ];
 
-const oLbl={okinawa:'Okinawa',mainland:'Mainland Japan',intl:'International'};
-const oTag={okinawa:'t-oki',mainland:'t-main',intl:'t-intl'};
-const tTag={rapper:'t-rap',producer:'t-prod',both:'t-both'};
+const ORIGIN_LABEL = { okinawa:'Okinawa', mainland:'Mainland Japan', intl:'International' };
+const ORIGIN_TAG   = { okinawa:'tag-oki', mainland:'tag-main', intl:'tag-intl' };
+const TYPE_TAG     = { rapper:'tag-rap', producer:'tag-prod', both:'tag-both' };
 
-function card(a){
-  const lc=a.origin==='okinawa'?'c-oki':(a.type==='producer'?'c-prod':'c-collab');
-  const issBadges=(a.issues||[]).map(i=>`<span class="issue-badge">#${i}</span>`).join('');
-  return `<div class="card ${lc}" data-origin="${a.origin}" data-type="${a.type}" data-cov="${a.covered}" data-s="${(a.name+' '+(a.real||'')+' '+a.bio+' '+a.conn).toLowerCase()}">
-    <div class="card-hdr">
-      <div class="card-hi">
-        <div class="vinyl" aria-hidden="true"></div>
-        <div class="card-txt">
-          <div class="card-dex">${a.dex}${issBadges}</div>
-          <div class="card-name">${a.name}</div>
-          ${a.real?`<div class="card-real">${a.real}</div>`:''}
-        </div>
+function buildCard(a) {
+  const borderClass = a.origin === 'okinawa' ? 'oki' : a.origin === 'mainland' ? 'main' : 'intl';
+  const issuePips = (a.issues || []).map(i =>
+    `<span class="issue-pip">#${i}</span>`
+  ).join('');
+
+  return `<article class="card ${borderClass}">
+    <div class="card-top">
+      <div class="vinyl" aria-hidden="true"></div>
+      <div>
+        <div class="card-id">${a.dex} ${issuePips}</div>
+        <div class="card-name">${a.name}</div>
+        ${a.real ? `<div class="card-real">${a.real}</div>` : ''}
       </div>
-      <div class="tags" style="margin-top:10px">
-        <span class="tag ${oTag[a.origin]}">${oLbl[a.origin]}</span>
-        <span class="tag ${tTag[a.type]}">${a.type}</span>
-        <span class="tag ${a.covered?'t-cov':'t-up'}">${a.covered?'Covered':'Upcoming'}</span>
-      </div>
+    </div>
+    <div class="card-tags">
+      <span class="tag ${ORIGIN_TAG[a.origin]}">${ORIGIN_LABEL[a.origin]}</span>
+      <span class="tag ${TYPE_TAG[a.type]}">${a.type}</span>
+      <span class="tag ${a.covered ? 'tag-cov' : 'tag-up'}">${a.covered ? 'Covered' : 'Upcoming'}</span>
     </div>
     <div class="card-body">
       <div class="card-bio">${a.bio}</div>
       <div class="card-conn">${a.conn}</div>
-      ${a.stat?`<div class="card-stat"><span>${a.stat}</span>${a.work?`<span>${a.work}</span>`:''}</div>`:''}
+      ${a.stat || a.work ? `<div class="card-notable"><strong>Notable: </strong>${[a.stat, a.work].filter(Boolean).join(' · ')}</div>` : ''}
     </div>
-  </div>`;
+  </article>`;
 }
 
-function renderStats(){
-  const t=A.length,ok=A.filter(a=>a.origin==='okinawa').length,cov=A.filter(a=>a.covered).length,pr=A.filter(a=>a.type==='producer'||a.type==='both').length;
-  document.getElementById('stats-row').innerHTML=`
-    <div class="stat-pill"><div class="stat-n">${t}</div><div class="stat-l">Total artists</div></div>
-    <div class="stat-pill"><div class="stat-n">${ok}</div><div class="stat-l">Okinawa</div></div>
-    <div class="stat-pill"><div class="stat-n">${cov}</div><div class="stat-l">Covered</div></div>
-    <div class="stat-pill"><div class="stat-n">${t-cov}</div><div class="stat-l">Upcoming</div></div>
-    <div class="stat-pill"><div class="stat-n">${pr}</div><div class="stat-l">Producers</div></div>`;
+function renderHeroStats(artists) {
+  const total = artists.length;
+  const oki   = artists.filter(a => a.origin === 'okinawa').length;
+  const cov   = artists.filter(a => a.covered).length;
+  const prod  = artists.filter(a => a.type === 'producer' || a.type === 'both').length;
+  document.getElementById('hero-stats').innerHTML = [
+    [total, 'Artists'],
+    [oki,   'Okinawa'],
+    [cov,   'Covered'],
+    [prod,  'Producers'],
+  ].map(([n, l]) => `<div class="hero-stat"><div class="hero-stat-n">${n}</div><div class="hero-stat-l">${l}</div></div>`).join('');
 }
 
-function filter(){
-  const q=document.getElementById('search').value.toLowerCase();
-  const fo=document.getElementById('f-origin').value;
-  const ft=document.getElementById('f-type').value;
-  const fs=document.getElementById('f-status').value;
-  const f=A.filter(a=>{
-    if(q&&!a['data-s']&&!(a.name+' '+(a.real||'')+' '+a.bio+' '+a.conn).toLowerCase().includes(q))return false;
-    if(q&&!(a.name+' '+(a.real||'')+' '+a.bio+' '+a.conn).toLowerCase().includes(q))return false;
-    if(fo&&a.origin!==fo)return false;
-    if(ft&&a.type!==ft)return false;
-    if(fs==='true'&&!a.covered)return false;
-    if(fs==='false'&&a.covered)return false;
+function filter() {
+  const q   = document.getElementById('search').value.toLowerCase();
+  const fo  = document.getElementById('f-origin').value;
+  const ft  = document.getElementById('f-type').value;
+  const fs  = document.getElementById('f-status').value;
+
+  const filtered = ARTISTS.filter(a => {
+    const searchStr = `${a.name} ${a.real || ''} ${a.bio} ${a.conn} ${a.work || ''}`.toLowerCase();
+    if (q && !searchStr.includes(q)) return false;
+    if (fo && a.origin !== fo) return false;
+    if (ft && a.type !== ft) return false;
+    if (fs === 'covered'  && !a.covered) return false;
+    if (fs === 'upcoming' &&  a.covered) return false;
     return true;
   });
-  const ok=f.filter(a=>a.origin==='okinawa');
-  const mn=f.filter(a=>a.origin==='mainland');
-  const it=f.filter(a=>a.origin==='intl');
-  document.getElementById('grid-oki').innerHTML=ok.length?ok.map(card).join(''):`<div class="empty">No Okinawa artists match.</div>`;
-  document.getElementById('grid-main').innerHTML=mn.length?mn.map(card).join(''):`<div class="empty">No mainland artists match.</div>`;
-  document.getElementById('grid-intl').innerHTML=it.length?it.map(card).join(''):`<div class="empty">No international artists match.</div>`;
-  document.getElementById('sec-oki').classList.toggle('hidden',ok.length===0&&fo&&fo!=='okinawa');
-  document.getElementById('sec-main').classList.toggle('hidden',mn.length===0&&fo==='okinawa'||mn.length===0&&fo==='intl');
-  document.getElementById('sec-intl').classList.toggle('hidden',it.length===0&&fo==='okinawa'||it.length===0&&fo==='mainland');
+
+  const oki  = filtered.filter(a => a.origin === 'okinawa');
+  const main = filtered.filter(a => a.origin === 'mainland');
+  const intl = filtered.filter(a => a.origin === 'intl');
+
+  document.getElementById('grid-oki').innerHTML  = oki.length  ? oki.map(buildCard).join('')  : '<div class="empty">No artists match.</div>';
+  document.getElementById('grid-main').innerHTML = main.length ? main.map(buildCard).join('') : '<div class="empty">No artists match.</div>';
+  document.getElementById('grid-intl').innerHTML = intl.length ? intl.map(buildCard).join('') : '<div class="empty">No artists match.</div>';
+
+  document.getElementById('cnt-oki').textContent  = `${oki.length} artist${oki.length !== 1 ? 's' : ''}`;
+  document.getElementById('cnt-main').textContent = `${main.length} artist${main.length !== 1 ? 's' : ''}`;
+  document.getElementById('cnt-intl').textContent = `${intl.length} artist${intl.length !== 1 ? 's' : ''}`;
+
+  document.getElementById('sec-oki').classList.toggle('hidden',  oki.length === 0  && fo && fo !== 'okinawa');
+  document.getElementById('sec-main').classList.toggle('hidden', main.length === 0 && (fo === 'okinawa' || fo === 'intl'));
+  document.getElementById('sec-intl').classList.toggle('hidden', intl.length === 0 && (fo === 'okinawa' || fo === 'mainland'));
+
+  document.getElementById('result-count').textContent = `${filtered.length} of ${ARTISTS.length} artists`;
 }
 
-renderStats();
+renderHeroStats(ARTISTS);
 filter();
 </script>
+</body>
+</html>
